@@ -1,4 +1,4 @@
-# Roblox API Reverse Proxy
+# RbxProxy Lite
 
 This is a simple non-auth based Node.js application written in TypeScript that acts as a reverse proxy for multiple Roblox API endpoints. The proxy supports dynamic routing based on the path, allowing you to forward requests to the supported roblox apis.
 
@@ -35,4 +35,4 @@ routes to games.roblox.com
 
 
 ## Deploy on Vercel:
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star-ot/node-reverse-proxy)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star-ot/rbxproxy-lite)
