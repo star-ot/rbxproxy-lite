@@ -33,6 +33,9 @@ while
 `/games/v2/users/340730/games/`
 routes to games.roblox.com
 
+Use tools like curl, Postman, or even your browser to directly access the endpoint.
+Try a GET request to: `https://rbxproxy-lite.vercel.app/games/v2/users/340730/games`
+
 
 ## Deploy on Vercel:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star-ot/rbxproxy-lite)
