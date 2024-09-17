@@ -36,6 +36,13 @@ routes to games.roblox.com
 Use tools like curl, Postman, or even your browser to directly access the endpoint.
 Try a GET request to: `https://rbxproxy-lite.vercel.app/games/v2/users/340730/games`
 
+## Local Installation
+1. Install requirements
+`npm install`
+2. Compile to TypeScript
+`npx tsc`
+3. Run compiled app
+`node index.js`
 
 ## Deploy on Vercel:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/star-ot/rbxproxy-lite)
