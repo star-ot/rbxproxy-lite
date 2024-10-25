@@ -9,15 +9,7 @@ This is a simple non-auth based Node.js application written in TypeScript that a
 - **TypeScript:** Strongly typed codebase for better maintainability and scalability.
 
 ## Supported APIs
-**Currently only supports non-authenticated GET requests.**
-- `avatar.roblox.com`
-- `catalog.roblox.com`
-- `friends.roblox.com`
-- `games.roblox.com`
-- `groups.roblox.com`
-- `inventory.roblox.com`
-- `thumbnails.roblox.com`
-- `users.roblox.com`
+This will attempt to forward any requests to specified service after your server URL. /inventory = inventory.roblox.com
 
 ## Prerequisites
 
