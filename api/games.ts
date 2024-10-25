@@ -8,13 +8,13 @@ const ROBLOX_GAMES_API_BASE_URL = 'https://games.roblox.com';
 router.use('/*', async (req: Request, res: Response) => {
     try {
         const endpoint = req.params[0]; // Capture the full path after /games/
-        
-        // Serialize query parameters from the original request
-        const queryParams = querystring.stringify(req.query);
-        
+
+        // Serialize query parameters from the original request by casting req.query to Record<string, any>
+        const queryParams = querystring.stringify(req.query as Record<string, string | number | boolean>);
+
         // Build the full URL with the endpoint and query parameters
         const url = `${ROBLOX_GAMES_API_BASE_URL}/${endpoint}${queryParams ? '?' + queryParams : ''}`;
-        
+
         // Forward the request to the Roblox API
         const robloxResponse = await axios({
             method: req.method,

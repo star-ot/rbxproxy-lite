@@ -10,7 +10,7 @@ router.use('/*', async (req: Request, res: Response) => {
         const endpoint = req.params[0]; // Capture the full path after /games/
         
         // Serialize query parameters from the original request
-        const queryParams = querystring.stringify(req.query);
+        const queryParams = querystring.stringify(req.query as Record<string, string | number | boolean>);
         
         // Build the full URL with the endpoint and query parameters
         const url = `${ROBLOX_GAMES_API_BASE_URL}/${endpoint}${queryParams ? '?' + queryParams : ''}`;
