@@ -1,28 +1,61 @@
-import express from 'express';
-import avatarRouter from './api/avatar';
-import catalogRouter from './api/catalog';
-import friendsRouter from './api/friends';
-import gamesRouter from './api/games';
-import groupsRouter from './api/groups';
-import inventoryRouter from './api/inventory';
-import thumbnailsRouter from './api/thumbnails';
-import usersRouter from './api/users';
+import express, { Request, Response } from 'express';
+import axios, { AxiosResponse } from 'axios';
 
 const app = express();
+const PORT = 3000;
+const RETRIES = 3;
+const TIMEOUT = 5000;
 
 app.use(express.json());
 
-app.use('/avatar', avatarRouter);
-app.use('/catalog', catalogRouter);
-app.use('/friends', friendsRouter);
-app.use('/games', gamesRouter);
-app.use('/groups', groupsRouter);
-app.use('/inventory', inventoryRouter);
-app.use('/thumbnails', thumbnailsRouter);
-app.use('/users', usersRouter);
+app.use(async (req: Request, res: Response) => {
+    const pathSegments = req.path.split('/').filter(Boolean);
 
-app.listen(3000, () => {
-    console.log('Proxy server is running on port 3000');
+    if (pathSegments.length < 2) {
+        return res.status(400).send('URL format invalid.');
+    }
+
+    const targetHost = pathSegments[0];
+    const targetPath = pathSegments.slice(1).join('/');
+    const targetUrl = `https://${targetHost}.roblox.com/${targetPath}`;
+
+    try {
+        const response = await makeRequest(req, targetUrl, 1);
+        res.status(response.status).set(response.headers).send(response.data);
+    } catch (err) {
+        res.status(500).send('Proxy failed to connect. Please try again.');
+    }
+});
+
+async function makeRequest(req: Request, url: string, attempt: number): Promise<AxiosResponse<any>> {
+    if (attempt > RETRIES) {
+        throw new Error('Max retries reached');
+    }
+
+    try {
+        const response = await axios({
+            url,
+            method: req.method,
+            headers: {
+                ...req.headers,
+                host: `${req.path.split('/')[1]}.roblox.com`,
+                'User-Agent': 'RoProxy',
+            },
+            data: req.body,
+            timeout: TIMEOUT,
+        });
+
+        return response;
+    } catch (err) {
+        if (attempt < RETRIES) {
+            return await makeRequest(req, url, attempt + 1);
+        }
+        throw err;
+    }
+}
+
+app.listen(PORT, () => {
+    console.log(`Proxy server is running on port ${PORT}`);
 });
 
 export default app;
